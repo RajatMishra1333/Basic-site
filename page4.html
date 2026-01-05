@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Answer! 💕</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heart-background">
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+        </div>
+        
+        <div class="content">
+            <h1 class="title">Last chance! Will you be mine? 💖</h1>
+            <div class="emoji">💝</div>
+            <p class="message">Choose wisely... or don't, I've rigged it! 😄</p>
+            <div class="button-group" id="buttonContainer">
+                <button class="btn btn-yes" onclick="celebrate()">Yes!</button>
+                <button class="btn btn-no" onclick="convertToYes(this)">No</button>
+                <button class="btn btn-no" onclick="convertToYes(this)">No</button>
+                <button class="btn btn-no" onclick="convertToYes(this)">No</button>
+            </div>
+        </div>
+        
+        <div id="celebration" class="celebration hidden">
+            <h1 class="title celebration-text">🎉 YAAAY! 🎉</h1>
+            <p class="message">I knew you'd say yes! (eventually 😄)</p>
+            <div class="confetti-container" id="confettiContainer"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        function convertToYes(btn) {
+            btn.textContent = 'Yes!';
+            btn.className = 'btn btn-yes';
+            btn.onclick = celebrate;
+            
+            // Check if all buttons are Yes now
+            const allButtons = document.querySelectorAll('#buttonContainer .btn');
+            const allYes = Array.from(allButtons).every(b => b.textContent === 'Yes!');
+            
+            if (allYes) {
+                setTimeout(celebrate, 500);
+            }
+        }
+        
+        function celebrate() {
+            document.querySelector('.content').classList.add('hidden');
+            document.getElementById('celebration').classList.remove('hidden');
+            createConfetti();
+        }
+        
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#ff6b6b', '#ff8e8e', '#ffb4b4', '#ffd700', '#ff69b4'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    container.appendChild(confetti);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
